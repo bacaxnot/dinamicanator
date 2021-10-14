@@ -7,7 +7,7 @@ from dynamicMethods import *;
 #FINDING GEOMETRIC PROPERTIES
 n = 5;
 h = 3200; #m
-m = 321359.2656; #kg
+m = 272330.6418; #kg
 E = 4700*np.sqrt(27); #MPa
 
 I1 = 300*(450**3)/12; #mm4
@@ -20,11 +20,11 @@ KT1 = 18*K1 + 4*K2; #horizontal
 KT2 = 18*K2 + 4*K1; #vertical
 #%%
 #MODEL DATA
-d1 = oneDeg(0, mass=m, stiffness=KT2, heigth=h)
-d2 = oneDeg(1, mass=m, stiffness=KT2, heigth=h)
-d3 = oneDeg(2, mass=m, stiffness=KT2, heigth=h)
-d4 = oneDeg(3, mass=m, stiffness=KT2, heigth=h)
-d5 = oneDeg(4, mass=m, stiffness=KT2, heigth=h)
+d1 = oneDeg(0, mass=m, stiffness=KT1, heigth=h)
+d2 = oneDeg(1, mass=m, stiffness=KT1, heigth=h)
+d3 = oneDeg(2, mass=m, stiffness=KT1, heigth=h)
+d4 = oneDeg(3, mass=m, stiffness=KT1, heigth=h)
+d5 = oneDeg(4, mass=m, stiffness=KT1, heigth=h)
 
 #%%
 #PROCEDURE
@@ -39,8 +39,8 @@ print(Tfun)
 
 
 #Fundamental periods
-Tx = 0.493823; #s
-Ty = 0.591311; #s
+Tx = 0.733; #s
+Ty = 0.733; #s
 
 #K determination (for EHF)
 T = Tfun;
@@ -57,7 +57,7 @@ spectre = aDesignSpectre(Aa=0.25,Av=0.25,Fa=1.15,Fv=1.55,I=1)
 #Drifts X direction
 Sax = spectre.getSa(T)
 dx, vix, vx = EHF(model, Sax, ki)
-print("\nHEF Y DIRECTION:\n")
+print("\nHEF X DIRECTION:\n")
 print(f"Base shear [kN]: {vx/1000}")
 for i in range(n):
     print(f"Story {n-i}:")

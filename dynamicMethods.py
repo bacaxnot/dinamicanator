@@ -18,6 +18,12 @@ def EHF(model:dynamicModel,
     n = len(m); #Number of stories
     #EHF: global and per element
     v = sa*g*np.sum(m);
+    for i in range(n):
+        if i == 0:
+            pass
+        else:
+            h[i] = h[i] + h[i-1]
+    h = np.flip(h)
     vi = ( v*(m*(h**ki))/np.sum(m*(h**ki)) ).reshape((n, 1));
     #Displacements (dxi) and drifts (di)
     dxi = np.linalg.solve(k, vi);
