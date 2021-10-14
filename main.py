@@ -31,29 +31,36 @@ d5 = oneDeg(4, mass=m, stiffness=KT2, heigth=h)
 model = dynamicModel()
 model.addDeg(d1, d2, d3, d4, d5)
 
-"""
+
 w2, phi = model.modes;
 wFun = np.sqrt(np.min(w2));
 Tfun = 2*np.pi/wFun;
 print(Tfun)
-"""
+
 
 #Fundamental periods
 Tx = 0.493823; #s
-kx = 1;
 Ty = 0.591311; #s
-ky = 1.0455;
+
+#K determination (for EHF)
+T = Tfun;
+if T <= 0.5:
+    ki = 1;
+elif 0.5<T and T<=2.5:
+    ki = 0.75 + 0.5*T;
+elif T > 2.5:
+    ki = 2;
 
 spectre = aDesignSpectre(Aa=0.25,Av=0.25,Fa=1.15,Fv=1.55,I=1)
 # spectre.print()
 
 #Drifts X direction
-Sax = spectre.getSa(Ty)
-dx, vix, vx = EHF(model, Sax, ky)
+Sax = spectre.getSa(T)
+dx, vix, vx = EHF(model, Sax, ki)
 print("\nHEF Y DIRECTION:\n")
 print(f"Base shear [kN]: {vx/1000}")
 for i in range(n):
-    print(f"Storie {n-i}:")
+    print(f"Story {n-i}:")
     print(f"Shear [kN]: {vix[i,0]/1000}")
     print(f"Drift [%]: {dx[i,0]*100}")
 
